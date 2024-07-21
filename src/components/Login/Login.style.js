@@ -32,7 +32,7 @@ export const LoginTitle = styled.h1`
   font-weight: normal;
 `;
 
-export const FormWrapper = styled.div`
+export const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
   padding: 1rem 0;
