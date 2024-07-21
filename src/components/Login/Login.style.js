@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { ReactComponent as Logo } from "../../assets/Movie.svg";
+import { ReactComponent as CrossIcon } from "../../assets/cross-icon.svg";
 import { COLORS, TYPOGRAPHY } from "../../styles";
 
 export const LoginPageContainer = styled.div`
@@ -16,6 +18,8 @@ export const LogoWrapper = styled.div`
   left: 50%;
   transform: translateX(-50%);
 `;
+
+export const BrandLogo = styled(Logo)``;
 
 export const LoginModal = styled.div`
   min-height: 40vh;
@@ -51,6 +55,24 @@ export const FormField = styled.input`
   &:focus {
     border-bottom-color: ${COLORS.WHITE.shade1};
   }
+`;
+
+export const FieldError = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const ErrorIcon = styled(CrossIcon)`
+  width: 20px;
+  height: 20px;
+  fill: ${COLORS.RED.shade1};
+  flex-shrink: 0;
+  margin-right: 6px;
+`;
+
+export const ErrorText = styled.span`
+  color: ${COLORS.RED.shade1};
+  font-size: ${TYPOGRAPHY.body.s};
 `;
 
 export const SubmitButton = styled.button`

@@ -1,7 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { ReactComponent as Logo } from "../../assets/Movie.svg";
-import { FormFields } from "../../constants/FormFields";
+import { MODE_ENUM } from "../../constants/FormFields";
 import { useLogin } from "./useLogin";
 
 import {
@@ -15,64 +13,78 @@ import {
   AdditionalInfoContainer,
   InfoText,
   LoginButton,
+  FieldError,
+  ErrorText,
+  BrandLogo,
+  ErrorIcon,
 } from "./Login.style";
 
-const Login = ({
-  modalTitle,
-  formFields,
-  btnText,
-  btnSubText,
-  secondaryBtnText,
-}) => {
-  const { fields, onFieldChangeHandler, onSubmitClickHandler } = useLogin();
+const Login = () => {
+  const {
+    mode,
+    fields,
+    formData,
+    setMode,
+    onFieldBlurHandler,
+    onFieldChangeHandler,
+    onSubmitClickHandler,
+  } = useLogin();
   const _renderFormFields = (formFields = {}) => {
     return Object.keys(formFields).map((field) => {
-      const { id, title, validator, errorText } = formFields[field];
+      const { id, type, title, showError, errorText } = formFields[field];
       return (
-        <FormField
-          type="text"
-          key={id}
-          name={id}
-          placeholder={title}
-          value={fields[id]}
-          onChange={(event) => onFieldChangeHandler(id, event)}
-        />
+        <>
+          <FormField
+            type={type}
+            key={id}
+            name={id}
+            placeholder={title}
+            value={fields[id]}
+            onBlur={(event) => onFieldBlurHandler(id, event)}
+            onChange={(event) => onFieldChangeHandler(id, event)}
+          />
+          {showError ? (
+            <FieldError>
+              <ErrorIcon />
+              <ErrorText>{errorText}</ErrorText>
+            </FieldError>
+          ) : null}
+        </>
       );
     });
   };
 
+  const isLoginMode = mode === MODE_ENUM.LOGIN;
   return (
     <LoginPageContainer>
       <LogoWrapper>
-        <Logo />
+        <BrandLogo />
       </LogoWrapper>
       <LoginModal>
         <LoginTitle>Login</LoginTitle>
-        <FormWrapper>{_renderFormFields(FormFields.LOGIN)}</FormWrapper>
-        <SubmitButton onClick={onSubmitClickHandler}>
-          Login to your account
+        <FormWrapper>{_renderFormFields(formData)}</FormWrapper>
+        <SubmitButton type="submit" onClick={onSubmitClickHandler}>
+          {isLoginMode ? "Login to your account" : "Create an account"}
         </SubmitButton>
         <AdditionalInfoContainer>
-          <InfoText>Don't have an account?</InfoText>
-          <LoginButton>Sign Up</LoginButton>
+          <InfoText>
+            {isLoginMode
+              ? "Don't have an account?"
+              : "Already have an account?"}
+          </InfoText>
+          <LoginButton
+            onClick={() =>
+              setMode(
+                mode === MODE_ENUM.LOGIN ? MODE_ENUM.SIGN_UP : MODE_ENUM.LOGIN
+              )
+            }
+          >
+            {isLoginMode ? "Sign Up" : "Login"}
+          </LoginButton>
         </AdditionalInfoContainer>
       </LoginModal>
     </LoginPageContainer>
   );
-};
-
-Login.propTypes = {
-  modalTitle: PropTypes.string,
-  formFields: PropTypes.object.isRequired,
-  btnText: PropTypes.string.isRequired,
-  btnSubText: PropTypes.string,
-  secondaryBtnText: PropTypes.string,
-};
-
-Login.defaultProps = {
-  modalTitle: "",
-  btnSubText: "",
-  secondaryBtnText: "",
 };
 
 export { Login };
