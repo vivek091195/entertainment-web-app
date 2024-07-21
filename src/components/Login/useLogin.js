@@ -1,16 +1,19 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
-import { FormFields, MODE_ENUM } from "../../constants/FormFields";
+import { FIELDS_ENUM, FormFields, MODE_ENUM } from "../../constants/FormFields";
+import { Routes } from "../../routes";
 
 const useLogin = () => {
   const [mode, setMode] = useState(MODE_ENUM.LOGIN);
   const [formData, setFormData] = useState(FormFields[mode]);
   const [fields, setFields] = useState({
-    email: "",
-    password: "",
-    repeat_password: "",
+    [FIELDS_ENUM.EMAIL]: "",
+    [FIELDS_ENUM.PASSWORD]: "",
+    [FIELDS_ENUM.REPEAT_PASSWORD]: "",
   });
 
   const onFieldBlurHandler = (key, { target }) => {
+    if (!formData[key]) return;
     const validator = formData[key].validator;
     const typedValue = target.value;
     const isValid = validator.test(typedValue);
@@ -20,9 +23,12 @@ const useLogin = () => {
         ...prevFormData[key],
         showError: !isValid,
         errorText:
-          typedValue === "" ? "Can't be empty" : prevFormData[key].errorText,
+          typedValue === ""
+            ? prevFormData[key].emptyError
+            : prevFormData[key].invalidError,
       },
     }));
+    return isValid;
   };
 
   const onFieldChangeHandler = (key, { target }) => {
@@ -33,7 +39,29 @@ const useLogin = () => {
   };
 
   const onSubmitClickHandler = () => {
-    console.log(fields);
+    const isValid = Object.keys(fields)
+      .map((field) =>
+        onFieldBlurHandler(field, {
+          target: {
+            value: fields[field],
+          },
+        })
+      )
+      .filter((el) => el === false);
+    if (isValid.length > 0) return;
+    submitUserDetails();
+  };
+
+  const submitUserDetails = async () => {
+    try {
+      const reqBody = {
+        [FIELDS_ENUM.EMAIL]: fields[FIELDS_ENUM.EMAIL],
+        [FIELDS_ENUM.PASSWORD]: fields[FIELDS_ENUM.PASSWORD],
+      };
+      const response = await axios.post(Routes.login, reqBody);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   useEffect(() => {
