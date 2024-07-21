@@ -9,5 +9,3 @@ export const TYPOGRAPHY = {
     l: "32px",
   },
 };
-
-Object.freeze(TYPOGRAPHY);
