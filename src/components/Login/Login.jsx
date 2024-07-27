@@ -61,7 +61,7 @@ const Login = () => {
         <BrandLogo />
       </LogoWrapper>
       <LoginModal>
-        <LoginTitle>Login</LoginTitle>
+        <LoginTitle>{isLoginMode ? "Login" : "Sign Up"}</LoginTitle>
         <FormWrapper>{_renderFormFields(formData)}</FormWrapper>
         <SubmitButton type="submit" onClick={onSubmitClickHandler}>
           {isLoginMode ? "Login to your account" : "Create an account"}

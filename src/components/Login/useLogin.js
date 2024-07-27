@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { FIELDS_ENUM, FormFields, MODE_ENUM } from "../../constants/FormFields";
 import { Routes } from "../../routes";
+import { apiInstance } from "../../config/axiosInstance";
 
 const useLogin = () => {
   const [mode, setMode] = useState(MODE_ENUM.LOGIN);
@@ -49,16 +49,28 @@ const useLogin = () => {
       )
       .filter((el) => el === false);
     if (isValid.length > 0) return;
-    submitUserDetails();
+    mode === MODE_ENUM.LOGIN ? submitLoginDetails() : submitRegisterDetails();
   };
 
-  const submitUserDetails = async () => {
+  const submitLoginDetails = async () => {
     try {
       const reqBody = {
         [FIELDS_ENUM.EMAIL]: fields[FIELDS_ENUM.EMAIL],
         [FIELDS_ENUM.PASSWORD]: fields[FIELDS_ENUM.PASSWORD],
       };
-      const response = await axios.post(Routes.login, reqBody);
+      const response = await apiInstance.post(Routes.login, reqBody);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const submitRegisterDetails = async () => {
+    try {
+      const reqBody = {
+        [FIELDS_ENUM.EMAIL]: fields[FIELDS_ENUM.EMAIL],
+        [FIELDS_ENUM.PASSWORD]: fields[FIELDS_ENUM.PASSWORD],
+      };
+      const response = await apiInstance.post(Routes.register, reqBody);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
