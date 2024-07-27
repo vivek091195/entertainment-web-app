@@ -7,6 +7,9 @@ export const COLORS = {
   RED: {
     shade1: "#fc4747",
   },
+  YELLOW: {
+    shade1: "#d89d31",
+  },
   WHITE: {
     shade1: "#ffffff",
   },

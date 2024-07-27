@@ -11,6 +11,7 @@ const useLogin = () => {
     [FIELDS_ENUM.PASSWORD]: "",
     [FIELDS_ENUM.REPEAT_PASSWORD]: "",
   });
+  const [loginErrorMessage, setLoginErrorMessage] = useState("");
 
   const onFieldBlurHandler = (key, { target }) => {
     if (!formData[key]) return;
@@ -60,6 +61,7 @@ const useLogin = () => {
       };
       const response = await apiInstance.post(Routes.login, reqBody);
     } catch (error) {
+      setLoginErrorMessage(error?.response?.data?.error);
       console.error("Error fetching data:", error);
     }
   };
@@ -72,11 +74,13 @@ const useLogin = () => {
       };
       const response = await apiInstance.post(Routes.register, reqBody);
     } catch (error) {
+      setLoginErrorMessage(error?.response?.data?.error);
       console.error("Error fetching data:", error);
     }
   };
 
   useEffect(() => {
+    setLoginErrorMessage("");
     setFormData(FormFields[mode]);
   }, [mode]);
 
@@ -85,6 +89,7 @@ const useLogin = () => {
     fields,
     formData,
     setMode,
+    loginErrorMessage,
     onFieldBlurHandler,
     onFieldChangeHandler,
     onSubmitClickHandler,

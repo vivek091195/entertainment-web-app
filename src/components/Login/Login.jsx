@@ -17,6 +17,8 @@ import {
   ErrorText,
   BrandLogo,
   ErrorIcon,
+  ErrorWindow,
+  Content,
 } from "./Login.style";
 
 const Login = () => {
@@ -25,6 +27,7 @@ const Login = () => {
     fields,
     formData,
     setMode,
+    loginErrorMessage,
     onFieldBlurHandler,
     onFieldChangeHandler,
     onSubmitClickHandler,
@@ -62,6 +65,11 @@ const Login = () => {
       </LogoWrapper>
       <LoginModal>
         <LoginTitle>{isLoginMode ? "Login" : "Sign Up"}</LoginTitle>
+        {loginErrorMessage ? (
+          <ErrorWindow>
+            <Content>{loginErrorMessage}</Content>
+          </ErrorWindow>
+        ) : null}
         <FormWrapper>{_renderFormFields(formData)}</FormWrapper>
         <SubmitButton type="submit" onClick={onSubmitClickHandler}>
           {isLoginMode ? "Login to your account" : "Create an account"}

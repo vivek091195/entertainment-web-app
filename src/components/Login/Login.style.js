@@ -36,6 +36,19 @@ export const LoginTitle = styled.h1`
   font-weight: normal;
 `;
 
+export const ErrorWindow = styled.div`
+  width: 100%;
+  margin: 1rem 0 0.5rem;
+  padding: 1rem;
+  background: ${COLORS.YELLOW.shade1};
+  border-radius: 5px;
+`;
+
+export const Content = styled.div`
+  font-size: ${TYPOGRAPHY.body.s};
+  font-weight: bold;
+`;
+
 export const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
