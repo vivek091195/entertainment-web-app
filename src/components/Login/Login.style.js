@@ -64,6 +64,7 @@ export const FormField = styled.input`
   font-size: ${TYPOGRAPHY.body.m};
   margin: 0.5rem 0;
   color: ${COLORS.WHITE.shade1};
+  caret-color: ${COLORS.RED.shade1};
   transition: border-color 0.3s ease;
   &:focus {
     border-bottom-color: ${COLORS.WHITE.shade1};

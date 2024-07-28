@@ -2,12 +2,13 @@ import styled from "styled-components";
 import { COLORS } from "../../styles/colors";
 
 export const PanelContainer = styled.div`
-  width: 6rem;
+  width: 100%;
   height: 100%;
   border-radius: 1rem;
   background-color: ${COLORS.BLUE.shade2};
   display: flex;
   flex-direction: column;
+  padding: 0 2rem;
 `;
 
 export const TopSection = styled.div`

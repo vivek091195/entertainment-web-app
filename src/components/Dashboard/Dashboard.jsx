@@ -1,11 +1,21 @@
 import React from "react";
 import { Panel } from "../Panel/Panel";
-import { DashboardContainer } from "./Dashboard.style";
+import {
+  DashboardContainer,
+  ListingSection,
+  PanelSection,
+} from "./Dashboard.style";
+import { SearchPanel } from "../SearchPanel/SearchPanel";
 
 const Dashboard = () => {
   return (
     <DashboardContainer>
-      <Panel />
+      <PanelSection>
+        <Panel />
+      </PanelSection>
+      <ListingSection>
+        <SearchPanel />
+      </ListingSection>
     </DashboardContainer>
   );
 };
